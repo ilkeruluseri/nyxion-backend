@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes import table
 
 app = FastAPI()
 
@@ -15,6 +16,8 @@ app.add_middleware(
 @app.get("/")
 def root():
     return {"message": "Hello from FastAPI!"}
+
+app.include_router(table.router, prefix="/api")
 
 # Example API endpoint
 @app.get("/api/hello")
