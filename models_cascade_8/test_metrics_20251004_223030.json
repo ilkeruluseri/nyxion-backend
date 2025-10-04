@@ -1,0 +1,49 @@
+{
+  "timestamp": "20251004_223030",
+  "source_csv": "/Users/sudetoral/Desktop/nyxion-backend/data/processed/exoplanets_final_features.csv",
+  "thr1": 0.45,
+  "thr2": 0.3,
+  "stage1_oof": {
+    "cand_rec": 0.9992982456140351,
+    "cand_prec": 0.9992982456140351,
+    "cand_f1": 0.9992982456140351
+  },
+  "stage2_oof": {
+    "conf_rec": 1.0,
+    "conf_prec": 1.0,
+    "conf_f1": 1.0
+  },
+  "test_metrics": {
+    "macro_f1": 0.7062920486197011,
+    "cand_f1": 0.5029515938606848,
+    "cand_prec": 0.6191860465116279,
+    "cand_rec": 0.4234592445328032
+  },
+  "confusion_matrix": [
+    [
+      629,
+      61,
+      80
+    ],
+    [
+      103,
+      213,
+      187
+    ],
+    [
+      20,
+      70,
+      669
+    ]
+  ],
+  "classification_report": "                precision    recall  f1-score   support\n\nFALSE POSITIVE       0.84      0.82      0.83       770\n     CANDIDATE       0.62      0.42      0.50       503\n     CONFIRMED       0.71      0.88      0.79       759\n\n      accuracy                           0.74      2032\n     macro avg       0.72      0.71      0.71      2032\n  weighted avg       0.74      0.74      0.73      2032\n",
+  "sizes": {
+    "train_plus_val": 11514,
+    "test": 2032,
+    "total": 13546
+  },
+  "notes": [
+    "thr1 ve thr2 OOF (cv=5) olas\u0131l\u0131klarla se\u00e7ildi; e\u015fik kaymas\u0131 azalt\u0131ld\u0131.",
+    "A2, A1 \u00e7\u0131kt\u0131s\u0131na g\u00f6re de\u011fil etiket-temelli (y!=1) kuruldu; se\u00e7im yanl\u0131l\u0131\u011f\u0131 d\u00fc\u015f\u00fcr\u00fcld\u00fc."
+  ]
+}

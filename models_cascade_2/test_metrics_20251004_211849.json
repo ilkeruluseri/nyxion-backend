@@ -1,0 +1,43 @@
+{
+  "timestamp": "20251004_211849",
+  "source_csv": "/Users/sudetoral/Desktop/nyxion-backend/data/processed/exoplanets_final_features.csv",
+  "thr1": 0.25,
+  "thr2": 0.45,
+  "conf_veto": 0.75,
+  "val_stage1_choice": {
+    "thr1": 0.25,
+    "cand_rec": 0.7932405566600398,
+    "cand_f1": 0.5757575757575758
+  },
+  "test_metrics": {
+    "macro_f1": 0.6760605523573133,
+    "macro_precision": 0.6915422264645503,
+    "macro_recall": 0.6789290482090206,
+    "cand_f1": 0.437703141928494,
+    "cand_precision": 0.48095238095238096,
+    "cand_recall": 0.40159045725646125
+  },
+  "confusion_matrix": [
+    [
+      552,
+      175,
+      43
+    ],
+    [
+      48,
+      202,
+      253
+    ],
+    [
+      19,
+      43,
+      697
+    ]
+  ],
+  "classification_report": "                precision    recall  f1-score   support\n\nFALSE POSITIVE       0.89      0.72      0.79       770\n     CANDIDATE       0.48      0.40      0.44       503\n     CONFIRMED       0.70      0.92      0.80       759\n\n      accuracy                           0.71      2032\n     macro avg       0.69      0.68      0.68      2032\n  weighted avg       0.72      0.71      0.71      2032\n",
+  "sizes": {
+    "train_plus_val": 11514,
+    "test": 2032,
+    "total": 13546
+  }
+}

@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+# Data/Models (keep only .gitkeep)
+data/*
+!data/**/.gitkeep
+models/*
+!models/**/.gitkeep
+# Misc
+.DS_Store
