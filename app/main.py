@@ -3,7 +3,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import table
 from app.routes import predict
+from app.routes import train
+from app.routes import files
+
 from app.services.model_service import model_service
+
 
 app = FastAPI()
 
@@ -32,6 +36,8 @@ def root():
 
 app.include_router(table.router, prefix="/api")
 app.include_router(predict.router, prefix="/api")
+app.include_router(train.router,   prefix="/api")
+app.include_router(files.router, prefix="/api")
 
 @app.get("/api/hello")
 def say_hello(name: str = "World"):

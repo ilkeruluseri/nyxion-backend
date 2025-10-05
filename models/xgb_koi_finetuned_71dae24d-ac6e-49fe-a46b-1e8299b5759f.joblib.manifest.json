@@ -1,0 +1,83 @@
+{
+  "created_at": "2025-10-05T09:16:15.199277Z",
+  "artifact_path": "/Users/sudetoral/Desktop/nyxion-backend/models/xgb_koi_finetuned_71dae24d-ac6e-49fe-a46b-1e8299b5759f.joblib",
+  "artifact_sha256": "8df0ab7f2d022b819429464da66d3e0c3368167d61c6aea922caea5c16fdb78f",
+  "random_state": 42,
+  "imputer": {
+    "strategy": "median"
+  },
+  "base_model": "/Users/sudetoral/Desktop/nyxion-backend/models/xgb_koi_finetuned_46eab153-d238-4dae-afda-df36efd21431.joblib",
+  "extra_estimators": 200,
+  "learning_rate": 0.08,
+  "no_split": false,
+  "group_split_by_kepid": true,
+  "test_size": 0.2,
+  "val_size": 0.1,
+  "label_map": {
+    "FALSE POSITIVE": 0,
+    "CANDIDATE": 1,
+    "CONFIRMED": 2
+  },
+  "classes": [
+    "FALSE POSITIVE",
+    "CANDIDATE",
+    "CONFIRMED"
+  ],
+  "feature_names": [
+    "koi_period",
+    "koi_duration",
+    "koi_depth",
+    "koi_prad",
+    "koi_steff",
+    "koi_slogg",
+    "koi_srad",
+    "koi_smass",
+    "koi_impact",
+    "koi_kepmag",
+    "koi_fpflag_nt",
+    "koi_fpflag_ss",
+    "koi_fpflag_co",
+    "koi_fpflag_ec",
+    "ratio_duration_period",
+    "log_period",
+    "log_duration",
+    "log_depth",
+    "log_prad",
+    "rp_over_rstar",
+    "stellar_density_proxy",
+    "duration_expected_proxy",
+    "duration_anomaly"
+  ],
+  "base_features": [
+    "koi_period",
+    "koi_duration",
+    "koi_depth",
+    "koi_prad",
+    "koi_steff",
+    "koi_slogg",
+    "koi_srad",
+    "koi_smass",
+    "koi_impact",
+    "koi_kepmag",
+    "koi_fpflag_nt",
+    "koi_fpflag_ss",
+    "koi_fpflag_co",
+    "koi_fpflag_ec"
+  ],
+  "engineered_features": [
+    "ratio_duration_period",
+    "log_period",
+    "log_duration",
+    "log_depth",
+    "log_prad",
+    "rp_over_rstar",
+    "stellar_density_proxy",
+    "duration_expected_proxy",
+    "duration_anomaly"
+  ],
+  "split_summary": {
+    "train_rows": 515,
+    "val_rows": 78,
+    "test_rows": 157
+  }
+}

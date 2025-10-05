@@ -1,0 +1,95 @@
+# ========================
+# PYTHON / FASTAPI / UVICORN
+# ========================
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+test-results/
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS / system files
+.DS_Store
+Thumbs.db
+
+# Environment variables / secrets
+.env
+.env.*
+*.env
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints
+
+# Logs
+*.log
+logs/
+*.out
+
+# Mypy / type checker
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre / pytype
+.pyre/
+.pytype/
+
+# Uvicorn reload artifacts
+*.pid
+
+# Docker / Compose
+*.pid
+docker-compose.override.yml
+.dockerignore
+
+# SQLite / temp databases
+*.sqlite3
+*.db
+
+# Node / frontend (if applicable)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local data / scratch files
+data/
+tmp/
+temp/
+*.bak
+*.old
