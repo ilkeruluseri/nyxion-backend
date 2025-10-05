@@ -121,7 +121,7 @@ def stratified_tvt_split(df, test_size=0.2, val_size=0.1, save_dir=None):
         df_train.to_csv(p / "koi_train.csv", index=False)
         df_val.to_csv(p / "koi_valid.csv", index=False)
         df_test.to_csv(p / "koi_test.csv", index=False)
-        print(f"[SAVED] train/valid/test CSV’leri '{p}/' altında kaydedildi.")
+        print(f"[SAVED] Train/valid/test CSVs have been saved under '{p}/'.")
 
     Xtr, ytr = build_features(df_train), df_train["koi_disposition"].map(LABEL_MAP).values
     Xva, yva = build_features(df_val), df_val["koi_disposition"].map(LABEL_MAP).values
@@ -213,14 +213,14 @@ def main():
                     help="Veri setini bölme; tamamını train olarak kullan.")
     args = ap.parse_args()
 
-    print("[INFO] Veri yükleniyor...")
+    print("[INFO] Loading data...")
     df_all = load_koi_df(args.train_csv)
-    print(f"[INFO] Toplam {len(df_all)} satır okundu.")
+    print(f"[INFO] Total {len(df_all)} rows read.")
     print(df_all["koi_disposition"].value_counts())
 
     # ===== Split kararı =====
     if args.no_split:
-        print("[INFO] no_split aktif: tüm veri train olarak kullanılacak, val/test boş geçilecek.")
+        print("[INFO] no_split active: all data will be used as train; val/test will be empty.")
         df_train = df_all.copy()
         df_val   = df_all.iloc[0:0].copy()
         df_test  = df_all.iloc[0:0].copy()
@@ -235,12 +235,12 @@ def main():
         yte = np.array([])
     else:
         if args.group_split_by_kepid:
-            print("[INFO] Star-group (kepid) split uygulanıyor...")
+            print("[INFO] Star-group (kepid) split is being applied...")
             (Xtr, ytr), (Xva, yva), (Xte, yte), (df_train, df_val, df_test) = split_by_star_groups(
                 df_all, test_size=args.test_size, val_size=args.val_size, save_dir=args.splits_dir
             )
         else:
-            print("[INFO] Satır bazlı stratified split uygulanıyor (leakage riski olabilir)...")
+            print("[INFO] Row-based stratified split is being applied (leakage risk possible)...")
             (Xtr, ytr), (Xva, yva), (Xte, yte), (df_train, df_val, df_test) = stratified_tvt_split(
                 df_all, test_size=args.test_size, val_size=args.val_size, save_dir=args.splits_dir
             )
@@ -248,15 +248,15 @@ def main():
             try:
                 if "kepid" in df_train.columns and "kepid" in df_test.columns:
                     overlap = set(df_train["kepid"]).intersection(df_test["kepid"])
-                    print(f"[DEBUG] Train/Test ortak kepid sayısı: {len(overlap)}")
+                    print(f"[DEBUG] Number of common kepid in Train/Test: {len(overlap)}")
                     if len(overlap) > 0:
-                        print("⚠️  WARNING: Aynı yıldız (kepid) hem train hem test'te var!"
-                              " Gerçek generalization için --group_split_by_kepid kullan.")
+                        print("⚠️  WARNING: The same star (kepid) exists in both train and test! "
+                              "For real generalization, use --group_split_by_kepid.")
             except Exception as e:
-                print(f"[WARN] Overlap kontrolü sırasında hata: {e}")
+                print(f"[WARN] Error during overlap check: {e}")
 
     # ===== Imputer =====
-    print("[INFO] Eksik değer doldurma...")
+    print("[INFO] Filling missing values...")
     imp = SimpleImputer(strategy="median")
     Xtr_i = imp.fit_transform(Xtr)
     Xva_i = imp.transform(Xva) if isinstance(Xva, pd.DataFrame) and len(Xva) > 0 else None
@@ -266,13 +266,13 @@ def main():
     sw_tr = make_sample_weight(ytr)
 
     # ===== Model =====
-    print("[INFO] XGBoost modeli eğitiliyor...")
+    print("[INFO] Training XGBoost model...")
     eval_set = []
     if Xva_i is not None and len(yva) > 0:
         eval_set.append((Xva_i, yva))
 
     if args.base_model:
-        print(f"[INFO] Warm-start: baz model yükleniyor → {args.base_model}")
+        print(f"[INFO] Warm-start: loading base model → {args.base_model}")
         base_model = load_base_model(args.base_model)
         base_params = base_model.get_params(deep=True)
 
@@ -324,7 +324,7 @@ def main():
         print(classification_report(yva, yva_pred, target_names=[IDX2LBL[i] for i in range(3)]))
         print("Confusion (val):\n", confusion_matrix(yva, yva_pred))
     else:
-        print("(boş)")
+        print("(empty)")
 
     # ===== TEST =====
     print("\n=== TEST ===")
@@ -334,7 +334,7 @@ def main():
         print("Confusion (test):\n", confusion_matrix(yte, yte_pred))
         print(f"Macro F1 (test): {f1_score(yte, yte_pred, average='macro'):.3f}")
     else:
-        print("(boş)")
+        print("(empty)")
 
     # ===== Kaydet =====
     Path(args.model_out).parent.mkdir(parents=True, exist_ok=True)
@@ -416,15 +416,11 @@ def main():
     with open(metrics_path, "w", encoding="utf-8") as f:
         json.dump(metrics, f, ensure_ascii=False, indent=2)
 
-    print(f"[SAVED] Model kaydedildi → {args.model_out}")
+    print(f"[SAVED] Model saved → {args.model_out}")
     print(f"[SAVED] Manifest → {manifest_path}")
     print(f"[SAVED] Metrics  → {metrics_path}")
 
-
-
-
-
-    print(f"[SAVED] Model kaydedildi → {args.model_out}")
+    print(f"[SAVED] Model saved → {args.model_out}")
 
 if __name__ == "__main__":
     main()
