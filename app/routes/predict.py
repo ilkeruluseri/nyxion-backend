@@ -17,22 +17,34 @@ def predict_api(req: dict):
 # --- yeni endpoint: frontend table datası ile çalışsın ---
 @router.post("/from-table")
 def predict_from_table(data: TableData):
-    """
-    Frontend'in gönderdiği table datasını (columns, rows)
-    modelin beklediği formata çevirir ve tahmin yapar.
-    """
     records = data.rows
     out = model_service.predict_records(records, strict=False)
+
+    if not out.get("ok", False):
+        # Hata ayrıntısını aynen döndür ki frontend gösterebilsin
+        return {
+            "ok": False,
+            "error": out.get("error", "Prediction error"),
+            "missing": out.get("missing_received"),
+            "unexpected": out.get("unexpected_received"),
+            "expected_columns": out.get("expected_columns"),
+        }
+
+    results = out.get("results", [])
+    # Güvenli zip: uzunluk farkı olursa taşmasın
+    rows_with_preds = []
+    for i, row in enumerate(data.rows):
+        pred = results[i] if i < len(results) else {}
+        rows_with_preds.append({
+            **row,
+            "prediction": pred.get("prediction"),
+            "confidence": pred.get("confidence"),
+        })
+
     return {
-        "ok": out.get("ok", False),
+        "ok": True,
         "expected_columns": out.get("expected_columns"),
-        "results": out.get("results"),
-        "columns": data.columns + ["prediction", "confidence"],
-        "rows": [
-            {**row, **{
-                "prediction": res.get("prediction"),
-                "confidence": res.get("confidence")
-            }}
-            for row, res in zip(data.rows, out.get("results", []))
-        ]
+        "results": results,
+        "columns": [*data.columns, "prediction", "confidence"],
+        "rows": rows_with_preds,
     }

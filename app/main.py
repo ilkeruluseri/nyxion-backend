@@ -21,6 +21,7 @@ def _load_model_once():
     # (dosya çok büyükse burada sadece path kontrol edip ilk istekte de yükleyebilirsin)
     try:
         model_service.load()
+        
     except Exception as e:
         # Model yüklenemezse bile servis ilk predict çağrısında tekrar deneyecek.
         print(f"[warn] Model not loaded at startup: {e}")
